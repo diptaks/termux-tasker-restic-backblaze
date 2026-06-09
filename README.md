@@ -131,7 +131,7 @@ if [ "$RC" -eq 0 ]; then
   restic snapshots --latest 1 | tail -5
   termux-notification \
     --title "✅ Backup Successful [${DEVICE_TAG}]" \
-    --content "${BACKUP_TAG^} directory successfully snapshot to Backblaze."
+    --content "${BACKUP_TAG^^} directory successfully snapshot to Backblaze."
 else
   restic unlock || true
   termux-notification \
@@ -208,7 +208,7 @@ To run this completely hands-free, configure Tasker to orchestrate the pipeline 
 
 * **The Silenced Console:** Because the script uses standard stream redirection (`exec >> log`), running it manually will appear to freeze your terminal screen. This is working as intended. Check its heartbeats live from another session using:
   ```bash
-  tail -f ~/.config/backup/logs/downloads-backup.log
+  tail -f "$(ls -t ~/.config/backup/logs/*.log | head -n1)"
   ```
 * **Error 401 Unauthorized:** Your `b2-credentials.conf` file either has trailing white spaces copied from your mobile clipboard or used double quotes that broke special syntax keys. Shift to single quotes (`'`) and verify clean formatting.
 
